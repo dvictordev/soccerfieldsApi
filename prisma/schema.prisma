@@ -22,13 +22,12 @@ model Local {
 }
 
 model Match {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
   owner   String
   hour    String
   date    String
-  local   String
-  Local   Local?  @relation(fields: [localId], references: [id])
-  localId String? @db.ObjectId
+  Local   Local? @relation(fields: [localId], references: [id])
+  localId String @db.ObjectId
 
   @@map("match")
 }

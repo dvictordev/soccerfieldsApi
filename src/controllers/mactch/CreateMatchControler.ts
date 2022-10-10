@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { type } from "os";
 import { prisma } from "../../utils/prisma";
 
 interface HourProps {
@@ -14,19 +13,19 @@ function upgradeHours(hours: String[], hour: String) {
 
 export class CreateMatchControler {
   async handle(req: Request, res: Response) {
-    const { owner, hour, date, local } = req.body;
+    const { owner, hour, date, localId } = req.body;
     const match = await prisma.match.create({
       data: {
         owner,
         hour,
         date,
-        local,
+        localId: localId,
       },
     });
 
     const hours = await prisma.local.findUnique({
       where: {
-        local,
+        id: localId,
       },
       select: {
         hours: true,
@@ -39,7 +38,7 @@ export class CreateMatchControler {
 
     await prisma.local.update({
       where: {
-        local,
+        id: localId,
       },
       data: {
         hours: filterHour(hour),
