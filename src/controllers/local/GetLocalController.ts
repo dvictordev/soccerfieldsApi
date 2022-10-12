@@ -8,6 +8,13 @@ export class GetLocalController {
       where: {
         id: localId,
       },
+      select:{
+        local:true,
+        hours:true,
+        fieldType:true,
+        bannerUrl:true,
+        Match:true
+      }
     });
 
     return res.json(local);

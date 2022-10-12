@@ -2,8 +2,9 @@ import { Router } from "express";
 import { CreateMatchControler } from "../controllers/mactch/CreateMatchControler";
 const router = Router();
 
-const createMatch = new CreateMatchControler();
+const matchContr = new CreateMatchControler();
+//necessesario passar o localId no body
+router.post("/match", matchContr.handleCreateMatch);
 
-router.post("/match", createMatch.handle);
 
 export { router };

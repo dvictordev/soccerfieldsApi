@@ -37,5 +37,12 @@ model User {
   email    String @unique
   password String
 
+  profile Profile
+
   @@map("user")
+}
+
+type Profile {
+  firstName String
+  lastName  String
 }

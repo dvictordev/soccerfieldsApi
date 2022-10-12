@@ -12,7 +12,7 @@ function upgradeHours(hours: String[], hour: String) {
 }
 
 export class CreateMatchControler {
-  async handle(req: Request, res: Response) {
+  async handleCreateMatch(req: Request, res: Response) {
     const { owner, hour, date, localId } = req.body;
     const match = await prisma.match.create({
       data: {
@@ -46,5 +46,17 @@ export class CreateMatchControler {
     });
 
     return res.json(match);
+  }
+
+
+  async matchByLocalId(req:Request, res:Response){
+    const localId = req.params
+    const match = await prisma.match.findMany({
+      where:{
+        localId:JSON.stringify(localId)
+      }
+    })
+
+    return res.json(match)
   }
 }

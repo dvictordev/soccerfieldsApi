@@ -4,6 +4,7 @@ import { userController } from "../controllers/user/userController";
 const userContr = new userController()
 const userRouter = Router()
 
-userRouter.post('/user', userContr.login)
+userRouter.post('/user', userContr.createUser)
+userRouter.post('/login', userContr.login)
 
 export {userRouter}
