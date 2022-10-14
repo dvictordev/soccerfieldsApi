@@ -1,24 +1,16 @@
 import { Request, Response } from "express";
 import { prisma } from "../../utils/prisma";
-
-interface HourProps {
-  hours: [];
-  hour: string;
-}
-
-function upgradeHours(hours: String[], hour: String) {
-  let hourFiltered = hours.filter((e) => hour != e);
-  console.log(hourFiltered);
-}
+import { updateHour } from "../../utils/updateHour";
 
 export class CreateMatchControler {
   async handleCreateMatch(req: Request, res: Response) {
-    const { owner, hour, date, localId } = req.body;
+    const { owner, hour, date, fixed, localId } = req.body;
     const match = await prisma.match.create({
       data: {
         owner,
         hour,
         date,
+        fixed,
         localId: localId,
       },
     });
@@ -31,32 +23,27 @@ export class CreateMatchControler {
         hours: true,
       },
     });
-    // return res.send(hours);
-    function filterHour(hour: any) {
-      return hours?.hours.filter((e: any) => e != hour);
-    }
 
     await prisma.local.update({
       where: {
         id: localId,
       },
       data: {
-        hours: filterHour(hour),
+        hours: updateHour(hour, hours),
       },
     });
 
     return res.json(match);
   }
 
-
-  async matchByLocalId(req:Request, res:Response){
-    const localId = req.params
+  async matchByLocalId(req: Request, res: Response) {
+    const localId = req.params;
     const match = await prisma.match.findMany({
-      where:{
-        localId:JSON.stringify(localId)
-      }
-    })
+      where: {
+        localId: JSON.stringify(localId),
+      },
+    });
 
-    return res.json(match)
+    return res.json(match);
   }
 }
