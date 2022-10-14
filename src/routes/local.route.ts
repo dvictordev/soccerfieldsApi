@@ -4,6 +4,6 @@ const localRouter = Router();
 const getLocal = new GetLocalController();
 
 localRouter.get("/local/:id", getLocal.handle);
-localRouter.get("/local", getLocal.locals);
+localRouter.get("/hours", getLocal.getFreeHours);
 
 export { localRouter };
