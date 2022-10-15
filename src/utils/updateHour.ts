@@ -1,3 +1,6 @@
-export function updateHour(hour: any, hours: any) {
-  return hours?.hours.filter((e: any) => e != hour);
-}
+export function updateHour(arrHours: any, hours:any) {
+  arrHours.forEach((hour:any) => {
+   return hours.filter((e:any) => {e != hour}) 
+  })
+};
+

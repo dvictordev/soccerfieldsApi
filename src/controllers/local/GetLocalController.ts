@@ -54,15 +54,20 @@ export class GetLocalController {
     });
 
     const newHours: any = arrHours.filter(
-      (este: any, i: any) => arrHours.indexOf(este) === i
+     async (este: any, i: any) => await arrHours.indexOf(este) !== i
     );
 
+    let arrSize = hours?.hours.length
+
+    if(!hours?.hours.length < newHours.length){
+      return res.send(hours?.hours)
+    }else if(newHours.length <= 0){
+      return res.send(hours?.hours)
+    }
     return res.send(newHours);
+
+
   }
 
-  async locals(req: Request, res: Response) {
-    const local = await prisma.local.findMany();
 
-    res.json(local);
-  }
 }

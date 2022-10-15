@@ -15,23 +15,23 @@ export class CreateMatchControler {
       },
     });
 
-    const hours = await prisma.local.findUnique({
-      where: {
-        id: localId,
-      },
-      select: {
-        hours: true,
-      },
-    });
+    // const hours = await prisma.local.findUnique({
+    //   where: {
+    //     id: localId,
+    //   },
+    //   select: {
+    //     hours: true,
+    //   },
+    // });
 
-    await prisma.local.update({
-      where: {
-        id: localId,
-      },
-      data: {
-        hours: updateHour(hour, hours),
-      },
-    });
+    // await prisma.local.update({
+    //   where: {
+    //     id: localId,
+    //   },
+    //   data: {
+    //     hours: updateHour(hour, hours),
+    //   },
+    // });
 
     return res.json(match);
   }
