@@ -10,7 +10,7 @@ app.use(router);
 app.use(localRouter);
 app.use(userRouter);
 
-// cronJob();
+cronJob();
 
 app.listen(3333, () => {
   console.log("http://localhost:3333");

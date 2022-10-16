@@ -40,10 +40,7 @@ export class GetLocalController {
       where:{
         date,
         localId
-      },
-      // select:{
-      //   hour:true
-      // }
+      }
     })
 
     hours?.hours.sort()
