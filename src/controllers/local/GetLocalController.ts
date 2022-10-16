@@ -1,4 +1,7 @@
+import { match } from "assert";
 import { Request, Response } from "express";
+import { filterHours } from "../../utils/filterHours";
+// import { filterHours } from "../../utils/filterHours";
 import { prisma } from "../../utils/prisma";
 
 export class GetLocalController {
@@ -23,51 +26,37 @@ export class GetLocalController {
   async getFreeHours(req: Request, res: Response) {
     const { date, localId } = req.body;
 
-    let arrHours: any = [];
-
     const hours = await prisma.local.findUnique({
-      where: {
-        id: localId,
+      where:{
+        id:localId
       },
-      select: {
-        hours: true,
-      },
-    });
+      select:{
+        hours:true
+      }
+    })
+
+
     const matchs = await prisma.match.findMany({
-      where: {
+      where:{
         date,
-        localId,
+        localId
       },
-      select: {
-        owner: true,
-        hour: true,
-        date: true,
-      },
-    });
+      // select:{
+      //   hour:true
+      // }
+    })
 
-    matchs.forEach((match) => {
-      hours?.hours.forEach((hour) => {
-        if (match.hour != hour) {
-          arrHours.push(hour);
-        }
-      });
-    });
+    hours?.hours.sort()
 
-    const newHours: any = arrHours.filter(
-     async (este: any, i: any) => await arrHours.indexOf(este) !== i
-    );
+    filterHours(matchs, hours)
 
-    let arrSize = hours?.hours.length
+    
+    
+    // const filteredHours = filterHours(newHours)
 
-    if(!hours?.hours.length < newHours.length){
-      return res.send(hours?.hours)
-    }else if(newHours.length <= 0){
-      return res.send(hours?.hours)
-    }
-    return res.send(newHours);
+    return res.json(hours?.hours)
 
 
   }
-
 
 }
